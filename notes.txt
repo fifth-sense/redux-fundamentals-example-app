@@ -1,0 +1,32 @@
+useSelector hook, which lets your React components read data from the Redux store.
+
+useSelector accepts a single function, which we call a selector function. A selector is a function that takes the entire Redux store state as its argument, 
+reads some value from the state, and returns that result.
+
+useSelector automatically subscribes to the Redux store for us!
+
+That way, any time an action is dispatched, it will call its selector function again right away. If the value returned by the selector changes from the last time it ran, 
+useSelector will force our component to re-render with the new data. All we have to do is call useSelector() once in our component, and it does the rest of the work for us.
+
+const todos = useSelector(state => state.todos)
+
+The React-Redux useDispatch hook gives us the store's dispatch method as its result.
+
+const dispatch = useDispatch()
+dispatch(someaction)
+
+Redux middleware were designed to enable writing logic that has side effects.
+
+Redux Async Data Flow
+So how do middleware and async logic affect the overall data flow of a Redux app?
+
+Just like with a normal action, we first need to handle a user event in the application, such as a click on a button. Then, we call dispatch(), and pass in something,
+ whether it be a plain action object, a function, or some other value that a middleware can look for.
+
+Once that dispatched value reaches a middleware, it can make an async call, and then dispatch a real action object when the async call completes.
+
+Earlier, we saw a diagram that represents the normal synchronous Redux data flow. When we add async logic to a Redux app, we add an extra step where middleware can run 
+logic like AJAX requests, then dispatch actions.
+
+TIP
+Thunk functions can be used for both asynchronous and synchronous logic. Thunks provide a way to write any reusable logic that needs access to dispatch and getState.
